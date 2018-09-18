@@ -46,10 +46,14 @@ class TimelineViewController: UITableViewController, TimelineViewProtocol {
     
     // MARK: - Elements
     
-    lazy var presenter: TimelinePresenterProtocol = TimelinePresenter(dependencies: (
-        view: self,
-        interactor: TimelineInteractor()
-    ))
+    lazy var presenter: TimelinePresenterProtocol = {
+        let interactor = TimelineInteractor()
+        return TimelinePresenter(dependencies: (
+            view: self,
+            interactor: interactor,
+            model: TokenModel(interactor: interactor)
+        ))
+    }()
     
     // MARK: - UI
     
