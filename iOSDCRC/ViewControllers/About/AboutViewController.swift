@@ -21,7 +21,13 @@ final class AboutViewController: UITableViewController, AboutViewProtocol {
         presenter.loadAbout()
     }
     
-    lazy var presenter: AboutPresenterProtocol = AboutPresenter(dependencies: (view: self, interactor: AboutInteractor()))
+    lazy var presenter: AboutPresenterProtocol = AboutPresenter(dependencies: (view: self, interactor: AboutInteractor(
+        dependsTo: (
+            resourceURLRepository: BundleResourceURLRepository(Bundle.main),
+            dataRepository: DataRepository(),
+            jsonDecodingRepository: JSONDecodingRepository<AboutEntity>().asAny()
+        )
+    )))
     
     // MARK: - UITableViewDataSource
     
